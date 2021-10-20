@@ -1,0 +1,12 @@
+name: Bump version
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: My first step
+        if: github.ref == 'refs/heads/dev'
+        run: echo !!! DEVELOPER !!!.
