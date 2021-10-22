@@ -45,7 +45,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
       - name: Process version of the tag
         id: version
         uses: ncipollo/semantic-version-action@v1
