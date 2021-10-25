@@ -11,25 +11,21 @@ jobs:
        if: github.ref == 'refs/heads/master'
        env:
          REVISION: '-${{github.run_number}}'
-       run: Some action 1
 
      - name: Release branch
        if: github.ref == 'refs/heads/release'
        env:
          REVISION: '-rc-${{github.run_number}}'
-       run: Some action 2
 
      - name: Develop branch
        if: github.ref == 'refs/heads/dev'
        env:
          REVISION: '-0-SNAPSHOT'
-       run: Some action 3
 
      - name: Feature branch
        if: github.ref == 'refs/heads/feature'
        env:
          REVISION: '-${{github.ref}}_0-SNAPSHOT'
-       run: Some action 4
        
      - name: Maven runner
        run: mvn clean install -Drevision=$REVISION -Dbuild_number
