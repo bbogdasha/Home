@@ -37,6 +37,7 @@ jobs:
        if: github.ref == 'refs/heads/feature'
        env:
          REVISION: '-${{github.ref}}_0-SNAPSHOT'
+       run: echo "!!!" $REVISION
          
      - name: Maven
        env: 
