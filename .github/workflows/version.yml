@@ -14,10 +14,6 @@ jobs:
        uses: actions/setup-java@v1
        with:
          java-version: 1.11
-     - name: Build with Maven
-       env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         API_TESTS_VERBOSE_LOGGING: false
    
      - name: Master branch
        if: github.ref == 'refs/heads/master'
@@ -35,14 +31,19 @@ jobs:
        if: github.ref == 'refs/heads/dev'
        env:
          REVISION: '-0-SNAPSHOT'
-       run: mvn clean install -Drevision=$REVISION -Dbuild_number
+       run: echo "!!!" $REVISION
 
      - name: Feature branch
        if: github.ref == 'refs/heads/feature'
        env:
          REVISION: '-${{github.ref}}_0-SNAPSHOT'
+         
+     - name: Maven
+       env: 
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         API_TESTS_VERBOSE_LOGGING: false
        run: mvn -V -e -B -ntp
-          clean install sonar:sonar 
+          clean install
           -Drevision=$REVISION -Dbuild_number
           -Papi-tests-infrastructure
           -Papi-tests
