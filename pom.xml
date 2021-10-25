@@ -21,6 +21,7 @@
     <packaging>pom</packaging>
 
     <properties>
+        <rev>-SNAPSHOT</rev>
         <java.version>11</java.version>
         <revision>0.0.1+${rev}</revision>
         <docker.revision>latest</docker.revision>
