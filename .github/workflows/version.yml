@@ -1,59 +1,60 @@
-#name: Bump version
-#on:
-#  push:
-#    branches:
-#      [master, dev, feature, release]
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Master branch
-#        if: github.ref == 'refs/heads/master'
-#        env:
-#          REVISION: '-${{github.run_number}}'
-#        run: Some action 1
-#
-#      - name: Release branch
-#        if: github.ref == 'refs/heads/release'
-#        env:
-#          REVISION: '-rc-${{github.run_number}}'
-#        run: Some action 2
-#
-#      - name: Develop branch
-#        if: github.ref == 'refs/heads/dev'
-#        env:
-#          REVISION: '-0-SNAPSHOT'
-#        run: Some action 3
-#
-#      - name: Feature branch
-#        if: github.ref == 'refs/heads/feature'
-#        env:
-#          REVISION: '-${{github.ref}}_0-SNAPSHOT'
-#        run: Some action 4
-#
-#      run: mvn clean install -Drevision=$REVISION -Dbuild_number
-
-name: Semantic Version
-
+name: Bump version
 on:
-  push:
-    tags:
-      - '*'
-
+ push:
+   branches:
+     [master, dev, feature, release]
 jobs:
+ build:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Master branch
+       if: github.ref == 'refs/heads/master'
+       env:
+         REVISION: '-${{github.run_number}}'
+       run: Some action 1
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Process version of the tag
-        id: version
-        uses: ncipollo/semantic-version-action@v1
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps.version.outputs) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump previous tag
-        env:
-          PREVIOUS_TAG: ${{ steps.version.outputs.previous_tag }}
-        run: echo "$PREVIOUS_TAG"
+     - name: Release branch
+       if: github.ref == 'refs/heads/release'
+       env:
+         REVISION: '-rc-${{github.run_number}}'
+       run: Some action 2
+
+     - name: Develop branch
+       if: github.ref == 'refs/heads/dev'
+       env:
+         REVISION: '-0-SNAPSHOT'
+       run: Some action 3
+
+     - name: Feature branch
+       if: github.ref == 'refs/heads/feature'
+       env:
+         REVISION: '-${{github.ref}}_0-SNAPSHOT'
+       run: Some action 4
+       
+     - name: Maven runner
+       run: mvn clean install -Drevision=$REVISION -Dbuild_number
+
+# name: Semantic Version
+
+# on:
+#   push:
+#     tags:
+#       - '*'
+
+# jobs:
+
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: Process version of the tag
+#         id: version
+#         uses: ncipollo/semantic-version-action@v1
+#       - name: Dump steps context
+#         env:
+#           STEPS_CONTEXT: ${{ toJson(steps.version.outputs) }}
+#         run: echo "$STEPS_CONTEXT"
+#       - name: Dump previous tag
+#         env:
+#           PREVIOUS_TAG: ${{ steps.version.outputs.previous_tag }}
+#         run: echo "$PREVIOUS_TAG"
