@@ -18,7 +18,7 @@
     <name>home</name>
     <description>SoftServe Home Project</description>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <rev>-SNAPSHOT</rev>
