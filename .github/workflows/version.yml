@@ -31,8 +31,7 @@ jobs:
 
      - name: Develop branch
        if: github.ref == 'refs/heads/dev'
-        $REVISION = '-0-SNAPSHOT'
-       run: echo "!!!" $REVISION
+       run: echo "REVISION=-0-SNAPSHOT" >> $GITHUB_ENV
 
      - name: Feature branch
        if: github.ref == 'refs/heads/feature'
