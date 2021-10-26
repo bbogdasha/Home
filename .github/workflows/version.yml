@@ -3,6 +3,9 @@ on:
   push:
     branches:
       [master, dev, feature, release]
+
+#I am in feature
+
 jobs:
   build:
     runs-on: ubuntu-latest
