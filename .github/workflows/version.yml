@@ -21,12 +21,8 @@ jobs:
           java-version: 1.11
 
 
-      - name: Set output
-        id: vars
-        run: git_branch=${GITHUB_REF#refs/heads/}
-
-      - name: Check output
-        run: echo ${{ steps.vars.outputs.git_branch }}
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
 
       - name: Master branch
         if: github.ref == 'refs/heads/master'
