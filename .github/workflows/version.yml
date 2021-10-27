@@ -34,11 +34,11 @@ jobs:
 
       - name: Develop branch
         if: github.ref == 'refs/heads/dev'
-        run: echo "REVISION=-0-SNAPSHOT" >> $GITHUB_ENV
+        run: echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
 
       - name: Feature branch
         if: github.ref == 'refs/heads/feature'
-        run: echo "REVISION=-${{github.ref}}_0-SNAPSHOT" >> $GITHUB_ENV
+        run: echo "REVISION=-${{github.ref}}_${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
 
       - name: Maven runner
         env:
