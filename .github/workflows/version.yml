@@ -5,6 +5,7 @@ on:
       [master, dev, feature, release]
 
 #I am in feature
+#Test feature
 
 jobs:
   build:
