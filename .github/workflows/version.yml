@@ -37,8 +37,9 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         run: echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
 
+#!pattern
       - name: Feature branch
-        if: github.ref == 'refs/heads/feature'
+        if: github.ref == 'refs/heads/feature/*'
         run: echo "REVISION=-${{github.ref}}_${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
 
       - name: Maven runner
