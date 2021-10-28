@@ -37,7 +37,6 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         run: echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
 
-#!pattern
       - name: Feature branch
         if: github.ref == 'refs/heads/feature/*'
         run: echo "REVISION=-${{github.ref}}_${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
@@ -51,9 +50,6 @@ jobs:
           -Papi-tests-infrastructure
           -Papi-tests
           -Pjacoco -Dsonar.coverage.jacoco.xmlReportPaths=${{ github.workspace }}/home-api-tests/target/site/jacoco-aggregate/jacoco.xml
-          -Dpostgres.user=${{secrets.POSTGRES_USER}}
-          -Dpostgres.password=${{secrets.POSTGRES_PASSWORD}}
-          -Dapi.tests.verbose.logging=${{env.API_TESTS_VERBOSE_LOGGING}}
           -Dgithub.packages.read.username=${{secrets.PACKAGES_READ_USERNAME}}
           -Dgithub.packages.read.token=${{secrets.PACKAGES_READ_TOKEN}}
           -DskipTests
