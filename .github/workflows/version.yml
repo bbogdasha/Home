@@ -1,0 +1,55 @@
+name: Bump version
+on:
+  push:
+    branches:
+      [master, dev, feature, release]
+
+#I am in dev
+#Test some changes
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      REVISION: '-SNAPSHOT'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 1.11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+
+      - name: Master branch
+        if: github.ref == 'refs/heads/master'
+        run: echo "REVISION=-${{github.run_number}}" >> $GITHUB_ENV
+
+      - name: Release branch
+        if: github.ref == 'refs/heads/release'
+        run: echo "REVISION=-rc-${{github.run_number}}" >> $GITHUB_ENV
+
+      - name: Develop branch
+        if: github.ref == 'refs/heads/dev'
+        run: echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+
+      - name: Feature branch
+        if: github.ref == 'refs/heads/feature/*'
+        run: echo "REVISION=-${{github.ref}}_${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+
+      - name: Maven runner
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API_TESTS_VERBOSE_LOGGING: false
+        run: mvn -V -e -B -ntp
+          clean install
+          -Papi-tests-infrastructure
+          -Papi-tests
+          -Pjacoco -Dsonar.coverage.jacoco.xmlReportPaths=${{ github.workspace }}/home-api-tests/target/site/jacoco-aggregate/jacoco.xml
+          -Dpostgres.user=${{secrets.POSTGRES_USER}}
+          -Dpostgres.password=${{secrets.POSTGRES_PASSWORD}}
+          -Dapi.tests.verbose.logging=${{env.API_TESTS_VERBOSE_LOGGING}}
+          -Dgithub.packages.read.username=${{secrets.PACKAGES_READ_USERNAME}}
+          -Dgithub.packages.read.token=${{secrets.PACKAGES_READ_TOKEN}}
+          -DskipTests
