@@ -2,7 +2,10 @@ name: Bump version
 on:
   push:
     branches:
-      [master, dev, feature, release]
+      - dev
+      - master
+      - release
+      - 'feature/**'
 
 #I am in dev
 #Test some changes
@@ -38,7 +41,7 @@ jobs:
         run: echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
 
       - name: Feature branch
-        if: github.ref == 'refs/heads/feature/*'
+        if: github.ref == 'refs/heads/feature/**'
         run: echo "REVISION=-${{github.ref}}_${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
 
       - name: Maven runner
