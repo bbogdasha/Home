@@ -26,7 +26,9 @@ jobs:
 
 
       - name: Branch name
-        run: echo running on branch ${GITHUB_REF##*/}
+        env:
+          BRANCH_NAME: ${GITHUB_REF##*/}
+        run: echo $BRANCH_NAME
 
       - name: Branch name two
         run: echo ${GITHUB_REF}
@@ -49,7 +51,7 @@ jobs:
 
       - name: Feature branch
         run: |
-          if [ ${{ github.ref }} == refs/heads/feature/${GITHUB_REF##*/} ]; then
+          if [ ${{ github.ref }} == refs/heads/feature/$BRANCH_NAME ]; then
            echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
 
       - name: Maven runner
