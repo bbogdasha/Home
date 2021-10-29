@@ -27,7 +27,7 @@ jobs:
 
       - name: Branch name
         env:
-          BRANCH_NAME: ${GITHUB_REF##*/}
+          BRANCH_NAME: '${GITHUB_REF##*/}'
         run: echo $BRANCH_NAME
 
       - name: Branch name two
