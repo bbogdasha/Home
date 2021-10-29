@@ -29,7 +29,7 @@ jobs:
         run: echo running on branch ${GITHUB_REF##*/}
 
       - name: Branch name two
-        run: echo ${GITHUB_REF}
+        run: echo ${GITHUB_REF#*/}
 
       - name: Master branch
         if: github.ref == 'refs/heads/master'
