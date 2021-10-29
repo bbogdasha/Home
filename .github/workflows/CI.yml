@@ -42,7 +42,7 @@ jobs:
           API_TESTS_VERBOSE_LOGGING: false
         run: >-
           mvn -V -e -B -ntp
-          clean install sonar:sonar
+          clean install
           -Papi-tests-infrastructure
           -Papi-tests
           -Pjacoco -Dsonar.coverage.jacoco.xmlReportPaths=${{ github.workspace }}/home-api-tests/target/site/jacoco-aggregate/jacoco.xml
