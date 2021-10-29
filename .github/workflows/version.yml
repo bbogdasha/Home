@@ -31,9 +31,6 @@ jobs:
       - name: Branch name two
         run: echo ${GITHUB_REF}
 
-      - name: Branch name three
-        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_HEAD_REF})"
-
       - name: Master branch
         if: github.ref == 'refs/heads/master'
         run: echo "REVISION=-${{github.run_number}}" >> $GITHUB_ENV
