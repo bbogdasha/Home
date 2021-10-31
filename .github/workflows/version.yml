@@ -2,7 +2,10 @@ name: Bump version
 on:
   push:
     branches:
-      [master, dev, feature, release]
+      - dev
+      - master
+      - release
+      - 'feature/**'
 
 #I am in dev
 #Test some changes
@@ -12,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REVISION: '-SNAPSHOT'
+      BRANCH_NAME: ''
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,9 +25,8 @@ jobs:
         with:
           java-version: 1.11
 
-
       - name: Branch name
-        run: echo running on branch ${GITHUB_REF##*/}
+        run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
       - name: Master branch
         if: github.ref == 'refs/heads/master'
@@ -33,13 +36,23 @@ jobs:
         if: github.ref == 'refs/heads/release'
         run: echo "REVISION=-rc-${{github.run_number}}" >> $GITHUB_ENV
 
-      - name: Develop branch
-        if: github.ref == 'refs/heads/dev'
-        run: echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+      #      - name: Develop branch
+      #        if: github.ref == 'refs/heads/dev'
+      #        run: echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+
+      #      - name: Feature branch
+      #        if: github.ref == 'refs/heads/feature/$BRANCH_NAME'
+      #        run: echo "REVISION=-f-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
 
       - name: Feature branch
-        if: github.ref == 'refs/heads/feature/*'
-        run: echo "REVISION=-${{github.ref}}_${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+        run: |
+          if [ ${{ github.ref }} == refs/heads/feature/$BRANCH_NAME ]; then
+           echo "REVISION=-f-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+          else
+            if [ ${{ github.ref }} == refs/heads/dev ]; then
+              echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+            fi
+          fi
 
       - name: Maven runner
         env:
