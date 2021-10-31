@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REVISION: '-SNAPSHOT'
+      BRANCH_NAME: ''
     steps:
       - uses: actions/checkout@v2
         with:
@@ -49,8 +50,8 @@ jobs:
 
       - name: Feature branch
         run: |
-          if [ ${{ github.ref }} == refs/heads/feature/${GITHUB_REF##*/} ]; then
-           echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+          if [ ${{ github.ref }} == refs/heads/feature/$BRANCH_NAME ]; then
+           echo "REVISION=-f-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
           fi
 
       - name: Maven runner
