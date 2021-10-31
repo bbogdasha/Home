@@ -51,12 +51,12 @@ jobs:
           else
             if [ ${{ github.ref }} == refs/heads/feature/$BRANCH_NAME ]; then
               echo "REVISION=-f-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
-          else
-            if [ ${{ github.ref }} == refs/heads/release/$BRANCH_NAME ]; then
-              echo "REVISION=-rc-${{github.run_number}}" >> $GITHUB_ENV
-          else
-            if [ ${{ github.ref }} == refs/heads/master ]; then
-              echo "REVISION=-${{github.run_number}}" >> $GITHUB_ENV
+            else
+              if [ ${{ github.ref }} == refs/heads/release/$BRANCH_NAME ]; then
+                echo "REVISION=-rc-${{github.run_number}}" >> $GITHUB_ENV
+            else
+              if [ ${{ github.ref }} == refs/heads/master ]; then
+                echo "REVISION=-${{github.run_number}}" >> $GITHUB_ENV
             fi
           fi
 
