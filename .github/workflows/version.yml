@@ -25,12 +25,8 @@ jobs:
         with:
           java-version: 1.11
 
-
       - name: Branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
-      - name: Branch name two
-        run: echo ${GITHUB_REF}
 
       - name: Master branch
         if: github.ref == 'refs/heads/master'
@@ -44,15 +40,15 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         run: echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
 
-#      - name: Feature branch
-#        if: [ ${{ github.ref }} == refs/heads/feature/* ]
-#        run: echo "REVISION=-${{github.ref}}_${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
-
       - name: Feature branch
-        run: |
-          if [ ${{ github.ref }} == refs/heads/feature/$BRANCH_NAME ]; then
-           echo "REVISION=-f-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
-          fi
+        if: github.ref == 'refs/heads/feature/$BRANCH_NAME'
+        run: echo "REVISION=-f-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+
+#      - name: Feature branch
+#        run: |
+#          if [ ${{ github.ref }} == refs/heads/feature/$BRANCH_NAME ]; then
+#           echo "REVISION=-f-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+#          fi
 
       - name: Maven runner
         env:
