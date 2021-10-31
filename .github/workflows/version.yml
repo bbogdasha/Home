@@ -32,9 +32,9 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: echo "REVISION=-${{github.run_number}}" >> $GITHUB_ENV
 
-      - name: Release branch
-        if: github.ref == 'refs/heads/release'
-        run: echo "REVISION=-rc-${{github.run_number}}" >> $GITHUB_ENV
+#      - name: Release branch
+#        if: github.ref == 'refs/heads/release'
+#        run: echo "REVISION=-rc-${{github.run_number}}" >> $GITHUB_ENV
 
 #      - name: Develop branch
 #        if: github.ref == 'refs/heads/dev'
@@ -47,10 +47,14 @@ jobs:
       - name: Feature branch
         run: |
           if [ ${{ github.ref }} == refs/heads/feature/$BRANCH_NAME ]; then
-           echo "REVISION=-f-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+            echo "REVISION=-f-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
           else
             if [ ${{ github.ref }} == refs/heads/dev ]; then
               echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+            else
+              if [ ${{ github.ref }} == refs/heads/release/$BRANCH_NAME ]; then
+                echo "REVISION=-rc-${{github.run_number}}" >> $GITHUB_ENV
+              fi
             fi
           fi
 
