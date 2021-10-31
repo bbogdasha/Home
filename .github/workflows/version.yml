@@ -7,7 +7,7 @@ on:
       - 'release/**'
       - 'feature/**'
 
-#I am in dev
+#I am in feature
 #Test some changes
 
 jobs:
