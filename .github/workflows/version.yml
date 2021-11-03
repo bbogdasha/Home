@@ -30,7 +30,7 @@ jobs:
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
       - name: Branch short name
-        run: echo ${GITHUB_REF#refs/heads/}
+        run: echo $(echo $GITHUB_REF | cut -d'/' -f 3)
 
       - name: Branch condition
         run: |
