@@ -26,11 +26,11 @@ jobs:
         with:
           java-version: 1.11
 
-#      - name: Branch name
-#        run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - name: Branch name
+        run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
       - name: Branch short name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+        run: echo "${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
 
       - name: Branch condition
         run: |
