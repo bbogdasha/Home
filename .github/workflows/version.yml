@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      REVISION: '-SNAPSHOT'
+      REVISION: '-0-SNAPSHOT'
       BRANCH_NAME: ''
     steps:
       - uses: actions/checkout@v2
@@ -40,13 +40,13 @@ jobs:
           else
             if [ ${{ github.ref }} == refs/heads/dev ];
             then
-              echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+              echo "REVISION=-${{github.run_number}}-dev" >> $GITHUB_ENV
             else
               if [ ${{ github.ref }} == refs/heads/release/$BRANCH_NAME ];
               then
                 echo "REVISION=-${{github.run_number}}-rc" >> $GITHUB_ENV
               else
-                echo "REVISION=-${{github.run_number}}-rc" >> $GITHUB_ENV
+                echo "REVISION=-$(GITHUB_REF | cut -d'/' -f 2)_$BRANCH_NAME" >> $GITHUB_ENV
               fi
             fi
           fi
