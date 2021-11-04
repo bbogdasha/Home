@@ -49,7 +49,7 @@ jobs:
               then
                 echo "REVISION=-${{github.run_number}}-rc" >> $GITHUB_ENV
               else
-                echo "REVISION=-$(GITHUB_REF | cut -d'/' -f 3)_$BRANCH_NAME" >> $GITHUB_ENV
+                echo "REVISION=-$(echo $GITHUB_REF | cut -d'/' -f 3)_$BRANCH_NAME" >> $GITHUB_ENV
               fi
             fi
           fi
