@@ -29,12 +29,6 @@ jobs:
       - name: Branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
-      - name: Branch short name
-        run: echo "$(echo $GITHUB_REF | cut -d'/' -f 3)_$BRANCH_NAME"
-
-      - name: Branch shory name two
-        run: echo $(echo "${GITHUB_REF}" | cut -d "/" -f3) | cut -c 2- | cut -c 1-13
-
       - name: Branch condition
         run: |
           if [ ${{ github.ref }} == refs/heads/master ];
