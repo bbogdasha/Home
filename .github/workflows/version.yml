@@ -6,6 +6,7 @@ on:
       - master
       - 'release/**'
       - 'feature/**'
+      - 'hotfix/**'
 
 #I am in feature
 #Test some changes
@@ -14,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      REVISION: '-SNAPSHOT'
+      REVISION: '-0-SNAPSHOT'
       BRANCH_NAME: ''
     steps:
       - uses: actions/checkout@v2
@@ -28,24 +29,24 @@ jobs:
       - name: Branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
+      - name: Branch short name
+        run: echo "$(echo $GITHUB_REF | cut -d'/' -f 2)_$BRANCH_NAME"
+
       - name: Branch condition
         run: |
-          if [ ${{ github.ref }} == refs/heads/feature/$BRANCH_NAME ];
+          if [ ${{ github.ref }} == refs/heads/master ];
           then
-            echo "REVISION=-f-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+            echo "REVISION=-${{github.run_number}}" >> $GITHUB_ENV
           else
-            if [ ${{ github.ref }} == refs/heads/release/$BRANCH_NAME ];
+            if [ ${{ github.ref }} == refs/heads/dev ];
             then
-              echo "REVISION=-rc-${{github.run_number}}" >> $GITHUB_ENV
+              echo "REVISION=-${{github.run_number}}-dev" >> $GITHUB_ENV
             else
-              if [ ${{ github.ref }} == refs/heads/dev ];
+              if [ ${{ github.ref }} == refs/heads/release/$BRANCH_NAME ];
               then
-                echo "REVISION=-${{github.run_number}}-SNAPSHOT" >> $GITHUB_ENV
+                echo "REVISION=-${{github.run_number}}-rc" >> $GITHUB_ENV
               else
-                if [ ${{ github.ref }} == refs/heads/master ];
-                then
-                  echo "REVISION=-${{github.run_number}}" >> $GITHUB_ENV
-                fi
+                echo "REVISION=-$(GITHUB_REF | cut -d'/' -f 2)_$BRANCH_NAME" >> $GITHUB_ENV
               fi
             fi
           fi
@@ -65,4 +66,4 @@ jobs:
           -Dgithub.packages.read.username=${{secrets.PACKAGES_READ_USERNAME}}
           -Dgithub.packages.read.token=${{secrets.PACKAGES_READ_TOKEN}}
           -DskipTests
-          -Drev=$REVISION
+          -Dci_revision=$REVISION
