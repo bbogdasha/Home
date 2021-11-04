@@ -8,7 +8,7 @@ on:
       - 'feature/**'
       - 'hotfix/**'
 
-#I am in feature
+#I am in hotfix
 #Test some changes
 
 jobs:
