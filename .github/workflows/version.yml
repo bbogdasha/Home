@@ -30,7 +30,7 @@ jobs:
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
       - name: Branch short name
-        run: echo "$(GITHUB_REF | cut -d'/' -f 3)_$BRANCH_NAME"
+        run: echo "$(GITHUB_REF | cut -d'/' -f 1)_$BRANCH_NAME"
 
       - name: Branch condition
         run: |
@@ -46,7 +46,7 @@ jobs:
               then
                 echo "REVISION=-${{github.run_number}}-rc" >> $GITHUB_ENV
               else
-                echo "REVISION=-$(GITHUB_REF | cut -d'/' -f 3)_$BRANCH_NAME" >> $GITHUB_ENV
+                echo "REVISION=-$(GITHUB_REF | cut -d'/' -f 1)_$BRANCH_NAME" >> $GITHUB_ENV
               fi
             fi
           fi
