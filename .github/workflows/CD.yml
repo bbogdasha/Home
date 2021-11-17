@@ -60,7 +60,7 @@ jobs:
         with:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_PASSWORD}}
-          repository: bogdash/data-migration
+          repository: bogdash/home-migration
           readme: "home-docs/docker-readme.md"
 
       - name: Publish to GitHub Packages and Docker Hub
