@@ -81,3 +81,4 @@ jobs:
           -Dgithub.packages.read.token=${{secrets.PACKAGES_READ_TOKEN}}
           -Dci_revision=$REVISION
           -DbuildNumber=${{github.run_number}}
+          -DskipTests
