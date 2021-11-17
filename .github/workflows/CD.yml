@@ -50,16 +50,16 @@ jobs:
       - name: Sync readme with home-application repository
         uses: ms-jpq/sync-dockerhub-readme@v1
         with:
-          username: ${{secrets.DOCKER_USERNAME}}
-          password: ${{secrets.DOCKER_PASSWORD}}
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_PASSWORD}}
           repository: homeacademy/home-application
           readme: "home-docs/docker-readme.md"
 
       - name: Sync readme with data-migration repository
         uses: ms-jpq/sync-dockerhub-readme@v1
         with:
-          username: ${{secrets.DOCKER_USERNAME}}
-          password: ${{secrets.DOCKER_PASSWORD}}
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_PASSWORD}}
           repository: homeacademy/data-migration
           readme: "home-docs/docker-readme.md"
 
@@ -76,8 +76,8 @@ jobs:
           -Pjacoco -Dsonar.coverage.jacoco.xmlReportPaths=${{ github.workspace }}/home-api-tests/target/site/jacoco-aggregate/jacoco.xml
           -Dpostgres.user=${{secrets.POSTGRES_USER}}
           -Dpostgres.password=${{secrets.POSTGRES_PASSWORD}}
-          -Ddockerhub.username=${{secrets.DOCKER_USERNAME}}
-          -Ddockerhub.password=${{secrets.DOCKER_PASSWORD}}
+          -Ddockerhub.username=${{secrets.DOCKERHUB_USERNAME}}
+          -Ddockerhub.password=${{secrets.DOCKERHUB_PASSWORD}}
           -Dapi.tests.verbose.logging=${{env.API_TESTS_VERBOSE_LOGGING}}
           -Dgithub.packages.read.username=${{secrets.PACKAGES_READ_USERNAME}}
           -Dgithub.packages.read.token=${{secrets.PACKAGES_READ_TOKEN}}
