@@ -70,8 +70,6 @@ jobs:
         run: >-
           mvn -V -e -B -ntp
           clean deploy
-          -Papi-tests-infrastructure
-          -Papi-tests
           -Ppush.images
           -Pjacoco -Dsonar.coverage.jacoco.xmlReportPaths=${{ github.workspace }}/home-api-tests/target/site/jacoco-aggregate/jacoco.xml
           -Dpostgres.user=${{secrets.POSTGRES_USER}}
