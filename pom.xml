@@ -61,8 +61,8 @@
         <profile>
             <id>push.images</id>
             <properties>
-                <image.liquibase.path>homeacademy/data-migration</image.liquibase.path>
-                <image.application.path>homeacademy/home-application</image.application.path>
+                <image.liquibase.path>bogdash/home-migration</image.liquibase.path>
+                <image.application.path>bogdash/home-application</image.application.path>
                 <docker.username>${dockerhub.username}</docker.username>
                 <docker.password>${dockerhub.password}</docker.password>
                 <jib.goal>build</jib.goal>
