@@ -71,7 +71,6 @@ jobs:
           mvn -V -e -B -ntp
           clean deploy
           -Ppush.images
-          -Pjacoco -Dsonar.coverage.jacoco.xmlReportPaths=${{ github.workspace }}/home-api-tests/target/site/jacoco-aggregate/jacoco.xml
           -Dpostgres.user=${{secrets.POSTGRES_USER}}
           -Dpostgres.password=${{secrets.POSTGRES_PASSWORD}}
           -Ddockerhub.username=${{secrets.DOCKERHUB_USERNAME}}
