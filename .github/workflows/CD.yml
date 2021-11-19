@@ -67,6 +67,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           API_TESTS_VERBOSE_LOGGING: false
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
         run: >-
           mvn -V -e -B -ntp
           clean deploy
