@@ -53,7 +53,6 @@ jobs:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_PASSWORD}}
           repository: bogdash/home-application
-          tags: ${{github.run_number}}
           readme: "home-docs/docker-readme.md"
 
       - name: Sync readme with data-migration repository
@@ -62,7 +61,6 @@ jobs:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_PASSWORD}}
           repository: bogdash/home-migration
-          tags: ${{github.run_number}}
           readme: "home-docs/docker-readme.md"
 
       - name: Publish to GitHub Packages and Docker Hub
