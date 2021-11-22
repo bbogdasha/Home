@@ -320,7 +320,7 @@
                         <goals>
                             <goal>build</goal>
                             <goal>tag</goal>
-                            <goal>merge</goal>
+                            <goal>push</goal>
                         </goals>
                         <configuration>
                             <tag>latest</tag>
@@ -331,7 +331,7 @@
                         <goals>
                             <goal>build</goal>
                             <goal>tag</goal>
-                            <goal>merge</goal>
+                            <goal>push</goal>
                         </goals>
                         <configuration>
                             <tag>${project.version}</tag>
