@@ -55,6 +55,7 @@
         <github.packages.read.username>${Dgithub.packages.read.username}</github.packages.read.username>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <dockerfile-maven-plugin.version>1.3.4</dockerfile-maven-plugin.version>
     </properties>
 
     <profiles>
@@ -228,11 +229,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.2.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>dockerfile-maven-plugin</artifactId>
-                    <version>1.4.10</version>
                 </plugin>
             </plugins>
         </pluginManagement>
