@@ -238,7 +238,6 @@
                     <to>
                         <image>${image.application.path}</image>
                         <tags>
-                            <tag>latest</tag>
                             <tag>${project.version}</tag>
                         </tags>
                         <auth>
