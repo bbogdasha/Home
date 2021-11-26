@@ -15,7 +15,6 @@ jobs:
     env:
       REVISION: '-0-SNAPSHOT'
       BRANCH_NAME: ''
-      GITHUB_SHA_SHORT: ''
     steps:
       - uses: actions/checkout@v2
         with:
@@ -29,8 +28,11 @@ jobs:
       - name: Branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
-      - name: Git commit sha
-        run: echo "GITHUB_SHA_SHORT=${GITHUB_SHA | cut -c1-7}" >> $GITHUB_SHA
+      - name: Another step
+        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)"
+
+#      - name: Step two
+#        run: echo "GIT_C=${{ github.sha }}"
 
       - name: Branch condition
         run: |
