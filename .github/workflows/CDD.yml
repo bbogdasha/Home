@@ -65,8 +65,6 @@ jobs:
           mvn -V -e -B -ntp
           deploy
           -Ppush.images
-          -Dpostgres.user=${{secrets.POSTGRES_USER}}
-          -Dpostgres.password=${{secrets.POSTGRES_PASSWORD}}
           -Ddockerhub.username=${{secrets.DOCKERHUB_USERNAME}}
           -Ddockerhub.password=${{secrets.DOCKERHUB_PASSWORD}}
           -Dapi.tests.verbose.logging=${{env.API_TESTS_VERBOSE_LOGGING}}
