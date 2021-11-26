@@ -58,11 +58,11 @@ jobs:
           fi
 
       - name: condition 1
-        if: "contains(echo $GITHUB_REF | cut -d'/' -f 3, 'dev')"
+        if: "contains(CHECK, 'dev')"
         run: echo "Hello!"
 
       - name: condition 2
-        if: "contains(echo $GITHUB_REF | cut -d'/' -f 3, 'release')"
+        if: "contains(CHECK, 'release')"
         run: echo "Buy!"
 
       - name: Sync readme with home-application repository
