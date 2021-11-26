@@ -28,6 +28,9 @@ jobs:
       - name: Branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
+      - name: Get Hash
+        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_HASH
+
       - name: Branch condition
         run: |
           if [ ${{ github.ref }} == refs/heads/master ];
@@ -80,5 +83,4 @@ jobs:
           -Dgithub.packages.read.token=${{secrets.PACKAGES_READ_TOKEN}}
           -Dci_revision=$REVISION
           -DbuildNumber=${{github.run_number}}
-          -Dgit_hash=$(git rev-parse --short "$GITHUB_SHA")
           -DskipTests
