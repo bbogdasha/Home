@@ -30,7 +30,7 @@ jobs:
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
       - name: Git commit sha
-        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)"
+        run: echo "GITHUB_SHA_SHORT=${GITHUB_SHA | cut -c1-7}" >> $GITHUB_SHA
 
       - name: Branch condition
         run: |
