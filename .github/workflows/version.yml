@@ -17,6 +17,7 @@ jobs:
     env:
       REVISION: '-0-SNAPSHOT'
       BRANCH_NAME: ''
+      CHECK: ''
     steps:
       - uses: actions/checkout@v2
         with:
@@ -28,6 +29,9 @@ jobs:
 
       - name: Branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+      - name: Check
+        run: echo "CHECK=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
 
       - name: Branch condition
         run: |
