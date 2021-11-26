@@ -17,7 +17,6 @@
         <image.application.path>bogdash/home-application</image.application.path>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-        <git_commit_sha>sha</git_commit_sha>
     </properties>
 
     <dependencies>
