@@ -238,7 +238,7 @@
                     <to>
                         <image>${image.application.path}</image>
                         <tags>
-                            <tag>${project.version}-${git_commit_sha}</tag>
+                            <tag>${project.version}${git_commit_sha}</tag>
                         </tags>
                         <auth>
                             <username>${docker.username}</username>

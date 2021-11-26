@@ -29,8 +29,8 @@ jobs:
       - name: Branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
-      - name: Git commit sha
-        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+#      - name: Git commit sha
+#        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
       - name: Branch condition
         run: |
@@ -41,10 +41,12 @@ jobs:
             if [ ${{ github.ref }} == refs/heads/dev ];
             then
               echo "REVISION=-${{github.run_number}}-dev" >> $GITHUB_ENV
+              echo "GITHUB_SHA_SHORT=-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
             else
               if [ ${{ github.ref }} == refs/heads/release/$BRANCH_NAME ];
               then
                 echo "REVISION=-${{github.run_number}}-rc" >> $GITHUB_ENV
+                echo "GITHUB_SHA_SHORT=-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
               else
                 echo "REVISION=-${{github.run_number}}-$(echo $GITHUB_REF | cut -d'/' -f 3)_${BRANCH_NAME//#/-}" >> $GITHUB_ENV
               fi
