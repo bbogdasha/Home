@@ -28,8 +28,8 @@ jobs:
       - name: Branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
-      - name: Another step
-        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)"
+      - name: Git commit sha
+        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
 #      - name: Step two
 #        run: echo "GIT_C=${{ github.sha }}"
