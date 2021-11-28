@@ -1,4 +1,4 @@
-name: Build and deploy workflow
+name: Deploy workflow
 
 on:
   push:
@@ -13,6 +13,8 @@ jobs:
   package:
     runs-on: ubuntu-latest
     env:
+      GITHUB_TOKEN: ${{ github.token }}
+      API_TESTS_VERBOSE_LOGGING: false
       REVISION: '-0-SNAPSHOT'
       BRANCH_NAME: ''
       GITHUB_SHA_SHORT: ''
@@ -30,11 +32,11 @@ jobs:
       - name: Branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
+      - name: Git commit sha
+        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+
       - name: Check
         run: echo "CHECK=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
-
-#      - name: Git commit sha
-#        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
       - name: Branch condition
         run: |
@@ -45,17 +47,23 @@ jobs:
             if [ ${{ github.ref }} == refs/heads/dev ];
             then
               echo "REVISION=-${{github.run_number}}-dev" >> $GITHUB_ENV
-              echo "GITHUB_SHA_SHORT=-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
             else
               if [ ${{ github.ref }} == refs/heads/release/$BRANCH_NAME ];
               then
                 echo "REVISION=-${{github.run_number}}-rc" >> $GITHUB_ENV
-                echo "GITHUB_SHA_SHORT=-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
               else
                 echo "REVISION=-${{github.run_number}}-$(echo $GITHUB_REF | cut -d'/' -f 3)_${BRANCH_NAME//#/-}" >> $GITHUB_ENV
               fi
             fi
           fi
+
+      - name: condition 1
+        if: "contains(env.CHECK, 'dev') || contains(env.CHECK, 'release')"
+        run: echo "Hello!"
+
+      - name: condition 2
+        if: "contains(env.CHECK, 'hotfix')"
+        run: echo "Buy!"
 
       - name: Sync readme with home-application repository
         uses: ms-jpq/sync-dockerhub-readme@v1
@@ -74,9 +82,6 @@ jobs:
           readme: "home-docs/docker-readme.md"
 
       - name: Publish to GitHub Packages and Docker Hub
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          API_TESTS_VERBOSE_LOGGING: false
         run: >-
           mvn -V -e -B -ntp
           clean deploy
