@@ -58,11 +58,11 @@ jobs:
           fi
 
       - name: condition 1
-        if: "contains(env.CHECK, 'dev')"
+        if: "contains(env.CHECK, '[dev release]')"
         run: echo "Hello!"
 
       - name: condition 2
-        if: "contains(env.CHECK, 'release')"
+        if: "contains(env.CHECK, 'hotfix')"
         run: echo "Buy!"
 
       - name: Sync readme with home-application repository
