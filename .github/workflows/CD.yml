@@ -58,7 +58,7 @@ jobs:
           fi
 
       - name: condition 1
-        if: "contains(env.CHECK, '[dev release]')"
+        if: "contains(env.CHECK, 'dev') || contains(env.CHECK, 'release')"
         run: echo "Hello!"
 
       - name: condition 2
