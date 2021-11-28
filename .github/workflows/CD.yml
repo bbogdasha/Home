@@ -9,6 +9,8 @@ on:
       - 'hotfix/**'
 #      - 'feature/**'
 
+#Test hotfix
+
 jobs:
   package:
     runs-on: ubuntu-latest
