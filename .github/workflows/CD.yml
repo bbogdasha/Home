@@ -82,8 +82,8 @@ jobs:
           -Ppush.images
           -Dpostgres.user=${{secrets.POSTGRES_USER}}
           -Dpostgres.password=${{secrets.POSTGRES_PASSWORD}}
-          -Ddockerhub.username=${{secrets.DOCKER_USERNAME}}
-          -Ddockerhub.password=${{secrets.DOCKER_PASSWORD}}
+          -Ddockerhub.username=${{secrets.DOCKERHUB_USERNAME}}
+          -Ddockerhub.password=${{secrets.DOCKERHUB_PASSWORD}}
           -Dapi.tests.verbose.logging=${{env.API_TESTS_VERBOSE_LOGGING}}
           -Dgithub.packages.read.username=${{secrets.PACKAGES_READ_USERNAME}}
           -Dgithub.packages.read.token=${{secrets.PACKAGES_READ_TOKEN}}
