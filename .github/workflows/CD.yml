@@ -9,7 +9,7 @@ on:
       - 'hotfix/**'
 #      - 'feature/**'
 
-#TEST FULL NAME
+#TEST NOT FULL NAME
 
 jobs:
   package:
