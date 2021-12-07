@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ github.token }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       API_TESTS_VERBOSE_LOGGING: false
       REVISION: '-0-SNAPSHOT'
       BRANCH_NAME: ''
@@ -35,7 +36,7 @@ jobs:
       - name: Get tag name
         run: echo "TAG_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
 
-      - name: Git commit sha
+      - name: Get short git commit sha
         run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
       - name: Branch condition
@@ -74,15 +75,15 @@ jobs:
           readme: "home-docs/docker-readme.md"
 
       - name: Publish to GitHub Packages and Docker Hub
-        if: "contains(env.TAG_NAME, 'dev') || contains(env.TAG_NAME, 'release')"
+        if: "startsWith(env.TAG_NAME, 'dev') || startsWith(env.TAG_NAME, 'release')"
         run: >-
           mvn -V -e -B -ntp
           clean deploy
           -Ppush.images
           -Dpostgres.user=${{secrets.POSTGRES_USER}}
           -Dpostgres.password=${{secrets.POSTGRES_PASSWORD}}
-          -Ddockerhub.username=${{secrets.DOCKERHUB_USERNAME}}
-          -Ddockerhub.password=${{secrets.DOCKERHUB_PASSWORD}}
+          -Ddockerhub.username=${{secrets.DOCKER_USERNAME}}
+          -Ddockerhub.password=${{secrets.DOCKER_PASSWORD}}
           -Dapi.tests.verbose.logging=${{env.API_TESTS_VERBOSE_LOGGING}}
           -Dgithub.packages.read.username=${{secrets.PACKAGES_READ_USERNAME}}
           -Dgithub.packages.read.token=${{secrets.PACKAGES_READ_TOKEN}}
@@ -92,7 +93,7 @@ jobs:
           -DskipTests
 
       - name: Publish to GitHub Packages
-        if: "!contains(env.TAG_NAME, 'dev') && !contains(env.TAG_NAME, 'release')"
+        if: "!startsWith(env.TAG_NAME, 'dev') && !startsWith(env.TAG_NAME, 'release')"
         run: >-
           mvn -V -e -B -ntp
           clean deploy
